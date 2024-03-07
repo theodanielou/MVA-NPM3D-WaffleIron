@@ -155,29 +155,14 @@ class PCDataset(Dataset):
     def __getitem__(self, index):
         # Load original point cloud
         pc_orig, labels_orig, filename = self.load_pc(index)
-        if self.train_augmentations is None:
-            print("first")
-            print("labels_orig shape : ", labels_orig.shape)
-            print("pc orig shape : ", pc_orig.shape)
-            print("\n")
 
         # Prepare input feature
         pc_orig = self.prepare_input_features(pc_orig)
 
-        if self.train_augmentations is None:
-            print("second")
-            print("labels_orig shape : ", labels_orig.shape)
-            print("pc orig shape : ", pc_orig.shape)
-            print("\n")
-
         # Test time augmentation
         if self.tta is not None:
             pc_orig, labels_orig = self.tta(pc_orig, labels_orig)
-            if self.train_augmentations is None:
-                print("third")
-                print("labels_orig shape : ", labels_orig.shape)
-                print("pc orig shape : ", pc_orig.shape)
-                print("\n")
+
         # Voxelization
         pc, labels = self.downsample(pc_orig, labels_orig)
 
@@ -202,15 +187,6 @@ class PCDataset(Dataset):
         else:
             _, upsample = kdtree.query(pc_orig[:, :3], k=1)
 
-        ####### TEST #######
-        if self.train_augmentations is None: 
-            print("upsample shape : ", upsample.shape)
-            print("pc shape : ", pc.shape)
-            print("labels shape : ", labels.shape)
-            print("labels_orig shape : ", labels_orig.shape)
-            print("pc orig shape : ", pc_orig.shape)
-            print("phase : ", self.phase)
-            print("\n")
         # Output to return
         out = (
             # Point features
