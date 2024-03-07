@@ -293,7 +293,7 @@ def main(args, config):
     if config["augmentations"]["instance_cutmix"]:
         get_datasets(config, args)
 
-    ngpus_per_node = torch.cuda.device_count()
+    ngpus_per_node = 1 # torch.cuda.device_count()
     if args.multiprocessing_distributed:
         print("MULTIPROCESSED DISTRIBUTED")
         # Since we have ngpus_per_node processes per node, the total world_size
