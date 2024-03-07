@@ -132,6 +132,7 @@ class TrainingManager:
         else:
             net = self.net.eval()
             loader = self.loader_val
+            print(torch.utils.data.get_worker_info())
             if self.rank == 0 or self.rank is None:
                 print(
                     "\nValidation: %d/%d epochs" % (self.current_epoch, self.max_epoch)
