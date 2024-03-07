@@ -41,6 +41,9 @@ class WaymoSemSeg(PCDataset):
             os.path.join(self.rootdir, self.list_frames[index][1]),
             dtype=np.uint8,
         )
+        print("load pc")
+        print("pc shape ", pc.shape)
+        print("labels shape ", labels.shape)
 
         labels = labels - 1
         labels[labels == -1] = 255
