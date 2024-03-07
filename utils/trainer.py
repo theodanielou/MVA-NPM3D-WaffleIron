@@ -168,6 +168,16 @@ class TrainingManager:
                 else:
                     with torch.no_grad():
                         out = net(*net_inputs)
+                        print("Validation out shape :", out.shape)
+                        print("Validation labels shape :", labels.shape) 
+                        ########## TEST ##########
+                        out_upsample = []
+                        for id_b, closest_point in enumerate(batch["upsample"]):
+                            temp = out[id_b, :, closest_point]
+                            out_upsample.append(temp.T)
+                        out_test = torch.cat(out_upsample, dim=0)
+                        print("Validation out_test shape :", out_test.shape)
+                        ##########################
                 # Upsample to original resolution
                 out_upsample = []
                 for id_b, closest_point in enumerate(batch["upsample"]):
