@@ -168,8 +168,8 @@ class PCDataset(Dataset):
         pc, labels = self.downsample(pc_orig, labels_orig)
 
         # Augment data
-        if self.train_augmentations is not None:
-            pc, labels = self.train_augmentations(pc, labels)
+        # if self.train_augmentations is not None: ### attention modif
+        pc, labels = self.train_augmentations(pc, labels)
 
         # Crop to fov
         pc, labels = self.crop_to_fov(pc, labels)
