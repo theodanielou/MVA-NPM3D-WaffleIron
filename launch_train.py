@@ -180,6 +180,7 @@ def distributed_training(gpu, ngpus_per_node, args, config):
     args.batch_size = config["dataloader"]["batch_size"]
     args.workers = config["dataloader"]["num_workers"]
     if args.distributed:
+        print("ARGS.DISTRIBUTED = TRUE")
         # For multiprocessing distributed, DistributedDataParallel constructor
         # should always set the single device scope, otherwise,
         # DistributedDataParallel will use all available devices.
@@ -224,6 +225,9 @@ def distributed_training(gpu, ngpus_per_node, args, config):
     # --- Sets the learning rate to the initial LR decayed by 10 every 30 epochs
     scheduler = get_scheduler(optim, config, len(train_loader))
 
+    print("Batch size", args.batch_size)
+    print("Validation loader :", val_loader)
+    print("Training loader :", train_loader)
     # --- Training
     mng = TrainingManager(
         model,
@@ -291,6 +295,7 @@ def main(args, config):
 
     ngpus_per_node = torch.cuda.device_count()
     if args.multiprocessing_distributed:
+        print("MULTIPROCESSED DISTRIBUTED")
         # Since we have ngpus_per_node processes per node, the total world_size
         # needs to be adjusted accordingly
         args.world_size = ngpus_per_node * args.world_size
@@ -302,6 +307,8 @@ def main(args, config):
             args=(ngpus_per_node, args, config),
         )
     else:
+        print("DISTRIBUTED_TRAINING (else)")
+        print("NGPUS_PER_NODE : ", ngpus_per_node)
         # Simply call main_worker function
         distributed_training(args.gpu, ngpus_per_node, args, config)
 
