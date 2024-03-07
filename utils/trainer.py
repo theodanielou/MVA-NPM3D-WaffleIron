@@ -155,6 +155,7 @@ class TrainingManager:
             batch["upsample"] = [
                 up.cuda(self.rank, non_blocking=True) for up in batch["upsample"]
             ]
+            print("Training batch[upsample] shape :", batch["upsample"].shape)
             cell_ind = batch["cell_ind"].cuda(self.rank, non_blocking=True)
             occupied_cell = batch["occupied_cells"].cuda(self.rank, non_blocking=True)
             neighbors_emb = batch["neighbors_emb"].cuda(self.rank, non_blocking=True)
@@ -172,6 +173,7 @@ class TrainingManager:
                         print("Validation labels shape :", labels.shape) 
                         ########## TEST ##########
                         out_upsample = []
+                        print("Validation batch[upsample] shape :", batch["upsample"])
                         for id_b, closest_point in enumerate(batch["upsample"]):
                             temp = out[id_b, :, closest_point]
                             out_upsample.append(temp.T)
