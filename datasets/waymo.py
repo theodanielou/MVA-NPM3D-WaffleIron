@@ -39,7 +39,7 @@ class WaymoSemSeg(PCDataset):
         # Load segmentation labels
         labels = np.fromfile(
             os.path.join(self.rootdir, self.list_frames[index][1]),
-            dtype=np.uint8,
+            dtype=np.int16,
         )
         print("load pc")
         print("pc shape ", pc.shape)
