@@ -155,14 +155,26 @@ class PCDataset(Dataset):
     def __getitem__(self, index):
         # Load original point cloud
         pc_orig, labels_orig, filename = self.load_pc(index)
+        if self.phase == "val":
+            print("labels_orig shape : ", labels_orig.shape)
+            print("pc orig shape : ", pc_orig.shape)
+            print("\n")
 
         # Prepare input feature
         pc_orig = self.prepare_input_features(pc_orig)
 
+        if self.phase == "val":
+            print("labels_orig shape : ", labels_orig.shape)
+            print("pc orig shape : ", pc_orig.shape)
+            print("\n")
+
         # Test time augmentation
         if self.tta is not None:
             pc_orig, labels_orig = self.tta(pc_orig, labels_orig)
-
+            if self.phase == "val":
+                print("labels_orig shape : ", labels_orig.shape)
+                print("pc orig shape : ", pc_orig.shape)
+                print("\n")
         # Voxelization
         pc, labels = self.downsample(pc_orig, labels_orig)
 
