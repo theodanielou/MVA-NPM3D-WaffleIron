@@ -132,7 +132,6 @@ class TrainingManager:
         else:
             net = self.net.eval()
             loader = self.loader_val
-            print(torch.utils.data.get_worker_info())
             if self.rank == 0 or self.rank is None:
                 print(
                     "\nValidation: %d/%d epochs" % (self.current_epoch, self.max_epoch)
@@ -155,7 +154,7 @@ class TrainingManager:
             batch["upsample"] = [
                 up.cuda(self.rank, non_blocking=True) for up in batch["upsample"]
             ]
-            print("Training batch[upsample] shape :", batch["upsample"])
+            # print("Training batch[upsample] shape :", batch["upsample"])
             cell_ind = batch["cell_ind"].cuda(self.rank, non_blocking=True)
             occupied_cell = batch["occupied_cells"].cuda(self.rank, non_blocking=True)
             neighbors_emb = batch["neighbors_emb"].cuda(self.rank, non_blocking=True)

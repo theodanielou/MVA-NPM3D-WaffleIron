@@ -158,7 +158,6 @@ class PCDataset(Dataset):
 
         # Prepare input feature
         pc_orig = self.prepare_input_features(pc_orig)
-        print("pc_orig shape : ",pc_orig.shape)
 
         # Test time augmentation
         if self.tta is not None:
@@ -168,8 +167,8 @@ class PCDataset(Dataset):
         pc, labels = self.downsample(pc_orig, labels_orig)
 
         # Augment data
-        # if self.train_augmentations is not None: ### attention modif
-        pc, labels = self.train_augmentations(pc, labels)
+        if self.train_augmentations is not None: 
+            pc, labels = self.train_augmentations(pc, labels)
 
         # Crop to fov
         pc, labels = self.crop_to_fov(pc, labels)
@@ -188,6 +187,15 @@ class PCDataset(Dataset):
         else:
             _, upsample = kdtree.query(pc_orig[:, :3], k=1)
 
+        ####### TEST #######
+        if self.train_augmentations is None: 
+            print("upsample shape : ", upsample.shape)
+            print("pc shape : ", pc.shape)
+            print("labels shape : ", labels.shape)
+            print("labels_orig shape : ", labels_orig.shape)
+            print("pc orig shape : ", pc_orig.shape)
+            print("phase : ", self.phase)
+            print("\n")
         # Output to return
         out = (
             # Point features
