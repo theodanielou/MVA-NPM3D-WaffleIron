@@ -155,7 +155,7 @@ class TrainingManager:
             batch["upsample"] = [
                 up.cuda(self.rank, non_blocking=True) for up in batch["upsample"]
             ]
-            print("Training batch[upsample] shape :", batch["upsample"].shape)
+            print("Training batch[upsample] shape :", batch["upsample"])
             cell_ind = batch["cell_ind"].cuda(self.rank, non_blocking=True)
             occupied_cell = batch["occupied_cells"].cuda(self.rank, non_blocking=True)
             neighbors_emb = batch["neighbors_emb"].cuda(self.rank, non_blocking=True)
