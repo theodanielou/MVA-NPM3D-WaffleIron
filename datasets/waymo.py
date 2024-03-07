@@ -3,7 +3,7 @@ import numpy as np
 from .pc_dataset import PCDataset
 
 class WaymoSemSeg(PCDataset):
-    # CLASS_NAME = # à trouver
+    CLASS_NAME =["Car", "Truck", "Bus", "Motorcyclist", "Bicyclist", "Pedestrian", "Sign", "Traffic Light", "Pole", "Construction Cone", "Bicycle", "Motorcycle", "Building", "Vegetation", "Tree Trunk", "Curb", "Road", "Lane Marker", "Walkable", "Sidewalk", "Other Ground", "Other vehicle"]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -13,13 +13,13 @@ class WaymoSemSeg(PCDataset):
             os.path.join(current_folder, "list_files_waymo.npz") # à créer
         )[self.phase]
         if self.phase == "train":
-            assert len(self) == 3736
+            assert len(self) == 414 # 3736
         elif self.phase == "val":
-            assert len(self) == 934
+            assert len(self) == 104 #934
         # elif self.phase == "test":
         #     assert len(self) == 6008
         elif self.phase == "test":
-            assert len(self) == 519
+            assert len(self) == 4671 #519
         else:
             raise ValueError(f"Unknown phase {self.phase}.")
 
