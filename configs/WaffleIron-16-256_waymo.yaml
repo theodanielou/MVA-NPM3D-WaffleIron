@@ -53,5 +53,5 @@ optim: # same as nuScenes
 
 scheduler: # same as nuScenes
   min_lr: 0.00001
-  max_epoch: 40 # 45
+  max_epoch: 35 # 45
   epoch_warmup: 4
