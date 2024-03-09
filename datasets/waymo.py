@@ -13,13 +13,13 @@ class WaymoSemSeg(PCDataset):
             os.path.join(current_folder, "list_files_waymo.npz") # à créer
         )[self.phase]
         if self.phase == "train":
-            assert len(self) == 142
+            assert len(self) == 3736
         elif self.phase == "val":
-            assert len(self) == 36
+            assert len(self) == 934
         # elif self.phase == "test":
         #     assert len(self) == 6008
         elif self.phase == "test":
-            assert len(self) == 20
+            assert len(self) == 519
         else:
             raise ValueError(f"Unknown phase {self.phase}.")
 
