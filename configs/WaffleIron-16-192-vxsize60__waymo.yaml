@@ -1,0 +1,57 @@
+waffleiron:
+  nb_channels: 192 #256 # To see with capacity of the calculator
+  depth: 16 # 24 # To see with capacity of the calculator
+  fov_xyz:
+    - - -75.2 # min value on x-axis:
+      - -75.2 # min value on y-axis:
+      - -2 # min value on z-axis:
+    - - 75.2 # max value on x-axis:
+      - 75.2 # max value on y-axis:
+      - 4 # max value on z-axis:
+  dim_proj:
+    - 2
+    - 1
+    - 0
+  grids_size:
+    - [250, 250]
+    - [250, 16]
+    - [250, 16]
+  drop: 0.2
+
+classif: # Architecture of the classifcation layer, after WaffleIron
+  nb_class: 22 # Number of classes on Waymo (after removing the ignore class, label 0 initially)
+
+embedding: # Architecture of the embedding layer, before WaffleIron
+  input_feat:
+    - "intensity"
+    - "xyz"
+    - "radius"
+  size_input: 5
+  neighbors: 16
+  voxel_size: 0.6 # 0.1
+
+dataloader: 
+  batch_size: 8 # 4
+  num_workers: 8 # 12 initially
+  max_points: 20000
+
+augmentations: # same as nuScenes
+  rotation:
+    - [2, 6]
+  flip_xy: null
+  scale:
+    - [4, 5, 6, 7]
+    - 0.1
+  instance_cutmix: False
+
+loss: # same as nuScenes
+  lovasz: 1.0
+
+optim: # same as nuScenes
+  lr: .002 #.001
+  weight_decay: 0.003
+
+scheduler: # same as nuScenes
+  min_lr: 0.00001
+  max_epoch: 33 # 30 # 45
+  epoch_warmup: 3 # 4
