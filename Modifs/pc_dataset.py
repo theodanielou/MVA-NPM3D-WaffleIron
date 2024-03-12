@@ -242,8 +242,6 @@ class PCDataset(Dataset):
         indices_pc_in_clusters = np.vstack(indices_pc_in_clusters)
 
         pc_clusters = pc[indices_pc_in_clusters, :] # Dimension ici [c_i, n_max, 8]
-        print("pc_clusters ", pc_clusters[0,0, :])
-        print("pc :", pc[0, :])
 
         pc_applati = pc_clusters.reshape(-1, 8) # Dimension ici [c_i * n_max, 8]
     
@@ -280,7 +278,7 @@ class PCDataset(Dataset):
         occupied_cells[:, c_i * self.nmax:] = 0
 
         pc_clusters_pad = pc_clusters_pad[:, :, 3:]
-        
+
         # Output to return
         out = ( 
             # Point features
