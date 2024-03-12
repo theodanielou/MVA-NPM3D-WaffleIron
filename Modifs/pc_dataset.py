@@ -262,6 +262,11 @@ class PCDataset(Dataset):
         labels_padding = np.full(nombre_points_padding, -1)
         labels_applati_pad = np.concatenate((labels_applati, labels_padding))
 
+        print("pc_applati shape", pc_applati.shape)
+        print("pc_applati_pad shape", pc_applati_pad.shape)
+        print("pc_clusters shape", pc_clusters.shape)
+
+
         pc_clusters_pad = pc_applati_pad.reshape(self.cmax, self.nmax, 5) # Dimension ici [c_max, n_max, 5]
 
         # Liste des index des points dans chaque cluster en prenant en compte le padding
