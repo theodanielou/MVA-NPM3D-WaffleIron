@@ -241,11 +241,11 @@ class PCDataset(Dataset):
         indices_pc_in_clusters = self.ajuster_clusters(pc[:,:3], clusters, self.nmax, self.cmax) # Dimension ici [c_i, n_max, 3], [c_i, n_max], c_i<=c_max
         indices_pc_in_clusters = np.vstack(indices_pc_in_clusters)
 
-        pc_clusters = pc[indices_pc_in_clusters, 3:] # Dimension ici [c_i, n_max, 5]
+        pc_clusters = pc[indices_pc_in_clusters, :] # Dimension ici [c_i, n_max, 8]
         print("pc_clusters ", pc_clusters[0,0, :])
         print("pc :", pc[0, :])
 
-        pc_applati = pc_clusters.reshape(-1, 5) # Dimension ici [c_i * n_max, 5]
+        pc_applati = pc_clusters.reshape(-1, 8) # Dimension ici [c_i * n_max, 8]
     
         labels_applati = labels[indices_pc_in_clusters.flatten()] # Dimension ici [c_i * n_max], correspond aux labels de chaque point dans pc_applati
         
@@ -254,7 +254,7 @@ class PCDataset(Dataset):
             upsample = np.arange(pc_applati.shape[0])
         else:
             kdtree = KDTree(pc_applati[:, :3])
-            _, upsample = kdtree.query(pc_orig[:, 1:4], k=1)  # Pour chaque point de pc_orig, on récupère le point l'indice du point le plus proche dans pc_aplati
+            _, upsample = kdtree.query(pc_orig[:, :3], k=1)  # Pour chaque point de pc_orig, on récupère le point l'indice du point le plus proche dans pc_aplati
 
 
         # Append padding pour avoir le bon nombre de cluster 
@@ -264,7 +264,7 @@ class PCDataset(Dataset):
         labels_padding = np.full(nombre_points_padding, -1)
         labels_applati_pad = np.concatenate((labels_applati, labels_padding))
 
-        pc_clusters_pad = pc_applati_pad.reshape(self.cmax, self.nmax, 5) # Dimension ici [c_max, n_max, 5]
+        pc_clusters_pad = pc_applati_pad.reshape(self.cmax, self.nmax, 8) # Dimension ici [c_max, n_max, 8]
 
         # Liste des index des points dans chaque cluster en prenant en compte le padding
         nouveau_index_pc_in_cluster = np.full((self.cmax, self.nmax), -1)
@@ -272,13 +272,15 @@ class PCDataset(Dataset):
         nouveau_index_pc_in_cluster[:c_i, :] = np.arange(0, c_i * self.nmax).reshape(c_i, self.nmax)
 
         # Projection 2D -> 3D: index of 2D cells for each point
-        cell_ind = self.get_occupied_2d_cells(pc_applati[:, 1:4])
+        cell_ind = self.get_occupied_2d_cells(pc_applati)
         cell_ind = np.hstack((cell_ind, np.zeros((cell_ind.shape[0], nombre_points_padding))))
 
         # Occupied cells
         occupied_cells = np.ones((1, self.cmax * self.nmax))
         occupied_cells[:, c_i * self.nmax:] = 0
 
+        pc_clusters_pad = pc_clusters_pad[:, :, 3:]
+        
         # Output to return
         out = ( 
             # Point features
