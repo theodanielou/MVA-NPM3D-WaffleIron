@@ -238,7 +238,7 @@ class PCDataset(Dataset):
         clusters[indices_high] = clusters_high
 
         # Application de la fonction
-        indices_pc_in_clusters = self.ajuster_clusters(pc[:,:3], clusters, self.n_max, self.c_max) # Dimension ici [c_i, n_max, 3], [c_i, n_max], c_i<=c_max
+        indices_pc_in_clusters = self.ajuster_clusters(pc[:,:3], clusters, self.nmax, self.cmax) # Dimension ici [c_i, n_max, 3], [c_i, n_max], c_i<=c_max
         indices_pc_in_clusters = np.vstack(indices_pc_in_clusters)
 
         pc_clusters = pc[indices_pc_in_clusters, 3:] # Dimension ici [c_i, n_max, 5]
