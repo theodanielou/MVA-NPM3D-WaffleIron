@@ -242,6 +242,8 @@ class PCDataset(Dataset):
         indices_pc_in_clusters = np.vstack(indices_pc_in_clusters)
 
         pc_clusters = pc[indices_pc_in_clusters, 3:] # Dimension ici [c_i, n_max, 5]
+        print("pc_clusters ", pc_clusters[0,0, :])
+        print("pc :", pc[0, :])
 
         pc_applati = pc_clusters.reshape(-1, 5) # Dimension ici [c_i * n_max, 5]
     
