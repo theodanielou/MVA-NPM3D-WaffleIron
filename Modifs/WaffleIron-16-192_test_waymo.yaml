@@ -31,8 +31,8 @@ embedding: # Architecture of the embedding layer, before WaffleIron
   voxel_size: 0.1
 
 dataloader: 
-  batch_size: 4 # 4
-  num_workers: 4 # 12 initially
+  batch_size: 2 # 4
+  num_workers: 2 # 12 initially
   max_points: 20000
 
 augmentations: # same as nuScenes
