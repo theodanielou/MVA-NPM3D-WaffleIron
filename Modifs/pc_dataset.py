@@ -271,7 +271,7 @@ class PCDataset(Dataset):
 
         # Projection 2D -> 3D: index of 2D cells for each point
         cell_ind = self.get_occupied_2d_cells(pc_applati[:, 1:4])
-        cell_ind = np.hstack(cell_ind, np.zeros((cell_ind.shape[0], nombre_points_padding)))
+        cell_ind = np.hstack((cell_ind, np.zeros((cell_ind.shape[0], nombre_points_padding))))
 
         # Occupied cells
         occupied_cells = np.ones((1, self.cmax * self.nmax))
