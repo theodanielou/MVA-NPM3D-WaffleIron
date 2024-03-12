@@ -57,13 +57,6 @@ class Embedding(nn.Module):
         x = x.view(batch_size, nb_clusters, self.channels_out, nmax)
         x = x.permute(0, 2, 1, 3).contiguous()
         x = x.view(batch_size, self.channels_out, nb_clusters * nmax)
-
-        labels = labels.view(batch_size * nb_clusters, 1, nmax)
-        labels = labels.view(batch_size, nb_clusters, 1, nmax) 
-        labels = labels.permute(0, 2, 1, 3).contiguous()  
-        labels = labels.view(batch_size, 1, nb_clusters * nmax)  
-        labels = labels.view(batch_size, nb_clusters * nmax, 1) # Faut s'assurer que ça ne modifie pas l'ordre mais en théorie non 
-
         return x
 
 
