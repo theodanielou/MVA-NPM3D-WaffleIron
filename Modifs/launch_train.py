@@ -193,7 +193,7 @@ def distributed_training(gpu, ngpus_per_node, args, config):
             (config["dataloader"]["num_workers"] + ngpus_per_node - 1) / ngpus_per_node
         )
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
-        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
+        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu], find_unused_parameters=True)
     elif args.gpu is not None:
         # Training on one GPU
         torch.cuda.set_device(args.gpu)
