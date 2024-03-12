@@ -284,7 +284,7 @@ class PCDataset(Dataset):
             # Point features
             pc_clusters_pad[None], # Dimension ici [1, c_max, n_max, 5]
             # Point labels of original entire point cloud
-            labels_applati_pad if self.phase in ["train", "trainval"] else labels_orig, # Dimension ici [c_max * n_max] ou [n]
+            labels_applati if self.phase in ["train", "trainval"] else labels_orig, # Dimension ici [c_max * n_max] ou [n]
             # Projection 2D -> 3D: index of 2D cells for each point
             cell_ind[None], # Dimension ici [1, c_max, n_max]
             # Index to match pc_applati_pad
