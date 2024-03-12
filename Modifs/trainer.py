@@ -157,7 +157,7 @@ class TrainingManager:
             cell_ind = batch["cell_ind"].cuda(self.rank, non_blocking=True)
             occupied_cell = batch["occupied_cells"].cuda(self.rank, non_blocking=True)
             idx = batch["idx"].cuda(self.rank, non_blocking=True)
-            net_inputs = (feat)
+            net_inputs = (feat, cell_ind, occupied_cell)
 
             # Get prediction and loss
             with torch.autocast("cuda", enabled=self.fp16):
