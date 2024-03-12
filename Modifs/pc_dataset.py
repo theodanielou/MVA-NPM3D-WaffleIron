@@ -163,7 +163,7 @@ class PCDataset(Dataset):
             if nombre_de_sous_clusters == 0:
                 continue
             
-            kmeans = KMeans(n_clusters=nombre_de_sous_clusters, random_state=42).fit(points_cluster)
+            kmeans = KMeans(n_clusters=nombre_de_sous_clusters, n_init = 'auto', random_state=42).fit(points_cluster)
             for i in range(nombre_de_sous_clusters):
                 sous_indices = indices[kmeans.labels_ == i]
                 if len(sous_indices) >= n_max:
@@ -258,11 +258,11 @@ class PCDataset(Dataset):
         # Append padding pour avoir le bon nombre de cluster 
         c_i = pc_clusters.shape[0] # c_i
         nombre_points_padding  = (self.cmax - c_i) * self.nmax
-        pc_applati_pad = F.pad(pc_applati, (0, 0, 0, nombre_points_padding), 'constant', 0)
+        pc_applati_pad = np.pad(pc_applati, ((0, 0), (0, 0), (0, nombre_points_padding)), mode='constant', constant_values=0)
         labels_padding = np.full(nombre_points_padding, -1)
         labels_applati_pad = np.concatenate((labels_applati, labels_padding))
 
-        pc_clusters_pad = pc_applati_pad.view(self.cmax, self.nmax, 5) # Dimension ici [c_max, n_max, 5]
+        pc_clusters_pad = pc_applati_pad.reshape(self.cmax, self.nmax, 5) # Dimension ici [c_max, n_max, 5]
 
         # Liste des index des points dans chaque cluster en prenant en compte le padding
         nouveau_index_pc_in_cluster = np.full((self.cmax, self.nmax), -1)
