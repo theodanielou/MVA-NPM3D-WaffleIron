@@ -258,7 +258,7 @@ class PCDataset(Dataset):
         # Append padding pour avoir le bon nombre de cluster 
         c_i = pc_clusters.shape[0] # c_i
         nombre_points_padding  = (self.cmax - c_i) * self.nmax
-        pc_applati_pad = np.pad(pc_applati, ((0, 0), (0, 0), (0, nombre_points_padding)), mode='constant', constant_values=0)
+        pc_applati_pad = np.pad(pc_applati, ((0, 0), (0, nombre_points_padding)), mode='constant', constant_values=0)
         labels_padding = np.full(nombre_points_padding, -1)
         labels_applati_pad = np.concatenate((labels_applati, labels_padding))
 
