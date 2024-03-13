@@ -191,7 +191,10 @@ class PCDataset(Dataset):
             
             # Reconstruction des clusters après suppression
             indices_temporaires = indices_temporaires_apres_suppression
-
+            if len(indices_temporaires) > c_max : 
+                to_pop = len(indices_temporaires) - c_max
+                for _ in range(to_pop):
+                    indices_temporaires.pop()
         return indices_temporaires 
 
 
@@ -257,7 +260,7 @@ class PCDataset(Dataset):
 
         # Append padding pour avoir le bon nombre de cluster 
         c_i = pc_clusters.shape[0] # c_i
-        nombre_points_padding  = (self.cmax - c_i) * self.nmax
+        nombre_points_padding  = max(0, (self.cmax - c_i) * self.nmax)
         pc_applati_pad = np.pad(pc_applati, ((0, nombre_points_padding), (0, 0)), mode='constant', constant_values=0)
         labels_padding = np.full(nombre_points_padding, -1)
         labels_applati_pad = np.concatenate((labels_applati, labels_padding))
