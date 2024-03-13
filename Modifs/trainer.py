@@ -172,7 +172,8 @@ class TrainingManager:
                 out_upsample = []
                 for id_b, closest_point in enumerate(batch["upsample"]):
                     idx_temp = idx[id_b][idx[id_b] != -1]
-                    temp = out[id_b, :, idx_temp]
+                    idx_temp_sorted = torch.argsort(idx_temp)
+                    temp = out[id_b, :, idx_temp_sorted]
                     temp = temp[:, closest_point]
                     out_upsample.append(temp.T)
                     ####### Rajouter l'index des points pour le calcul de la loss
