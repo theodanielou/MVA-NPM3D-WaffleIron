@@ -278,7 +278,7 @@ class PCDataset(Dataset):
 
         # Occupied cells
         occupied_cells = np.ones((1, self.cmax * self.nmax, 1)) # Modif 
-        occupied_cells[:, c_i * self.nmax:, 1] = 0 # Modif
+        occupied_cells[:, c_i * self.nmax:] = 0 # Modif
 
         pc_clusters_pad = pc_clusters_pad[:, :, 3:]
 
