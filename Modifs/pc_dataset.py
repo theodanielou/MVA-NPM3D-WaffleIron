@@ -277,7 +277,7 @@ class PCDataset(Dataset):
         cell_ind = np.hstack((cell_ind, np.zeros((cell_ind.shape[0], nombre_points_padding))))
 
         # Occupied cells
-        occupied_cells = np.ones((1, self.cmax * self.nmax, 1)) # Modif 
+        occupied_cells = np.ones((1, self.cmax * self.nmax)) # Modif 
         occupied_cells[:, c_i * self.nmax:] = 0 # Modif
 
         pc_clusters_pad = pc_clusters_pad[:, :, 3:]
