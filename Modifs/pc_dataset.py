@@ -277,8 +277,8 @@ class PCDataset(Dataset):
         cell_ind = np.hstack((cell_ind, np.zeros((cell_ind.shape[0], nombre_points_padding))))
 
         # Occupied cells
-        occupied_cells = np.ones((1, self.cmax * self.nmax))
-        occupied_cells[:, c_i * self.nmax:] = 0
+        occupied_cells = np.ones((1, self.cmax * self.nmax, 1)) # Modif 
+        occupied_cells[:, c_i * self.nmax:, 1] = 0 # Modif
 
         pc_clusters_pad = pc_clusters_pad[:, :, 3:]
 
@@ -332,11 +332,11 @@ class Collate:
         upsample = [torch.from_numpy(u) for u in upsample]
 
         idx = torch.from_numpy(np.vstack(idx)).long() # B x (Cmax x Nmax) 
+
         
         # Transform index pour récupérer la bonne forme à la sortie du modèle
         batch_size, nb_clusters, nmax, _ = feat.shape
         index_tokens = transfom_index(idx, batch_size, nb_clusters, nmax)
-
 
         # Prepare output variables
         out = {

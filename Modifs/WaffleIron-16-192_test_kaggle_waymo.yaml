@@ -28,7 +28,7 @@ embedding: # Architecture of the embedding layer, before WaffleIron
     - "radius"
   size_input: 5
   neighbors: 16
-  voxel_size: 0.3
+  voxel_size: 0.1
 
 dataloader: 
   batch_size: 8 # 4
