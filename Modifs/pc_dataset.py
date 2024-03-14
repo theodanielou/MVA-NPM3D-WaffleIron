@@ -30,8 +30,8 @@ class PCDataset(Dataset):
         num_neighbors=16, # N'est plus utile car on a un nombre fixe de clusters
         tta=False,
         instance_cutmix=False,
-        nmax=50,
-        cmax=300,
+        nmax=100,
+        cmax=200,
     ):
         super().__init__()
 
@@ -221,14 +221,14 @@ class PCDataset(Dataset):
         pc, labels = self.crop_to_fov(pc, labels)
 
         # 0.5 peut être modifié pour changer la hauteur de la séparation
-        indices_ground = np.where(pc[:, 2] < 0.5)[0]
+        indices_ground = np.where(pc[:, 2] < 0.2)[0]
         pc_ground = pc[indices_ground, :3] # récupérer que les points pas les autres features 
-        indices_high = np.where(pc[:, 2] >= 0.5)[0]
+        indices_high = np.where(pc[:, 2] >= 0.2)[0]
         pc_high = pc[indices_high, :3]
 
         # Clustering => Modifier eps, peut être le rendre modifiable dans les paramètres
         clusters_ground = DBSCAN(eps = 0.8, min_samples=20).fit_predict(pc_ground)
-        clusters_high = DBSCAN(eps = 0.8, min_samples=20).fit_predict(pc_high)
+        clusters_high = DBSCAN(eps = 0.2, min_samples=20).fit_predict(pc_high)
         
         # Fusionner les clusters en gardant les indices initiaux de pc 
         clusters_ground += 1
