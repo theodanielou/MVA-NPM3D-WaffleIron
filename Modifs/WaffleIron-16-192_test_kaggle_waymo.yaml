@@ -1,6 +1,6 @@
 waffleiron:
   nb_channels: 192 #256 # To see with capacity of the calculator
-  depth: 4 # 24 # To see with capacity of the calculator
+  depth: 8 # 24 # To see with capacity of the calculator
   fov_xyz:
     - - -75.2 # min value on x-axis:
       - -75.2 # min value on y-axis:
@@ -28,7 +28,7 @@ embedding: # Architecture of the embedding layer, before WaffleIron
     - "radius"
   size_input: 5
   neighbors: 16
-  voxel_size: 0.01
+  voxel_size: 0.3
 
 dataloader: 
   batch_size: 8 # 4
@@ -48,10 +48,10 @@ loss: # same as nuScenes
   lovasz: 1.0
 
 optim: # same as nuScenes
-  lr: .005
+  lr: .01
   weight_decay: 0.003
 
 scheduler: # same as nuScenes
   min_lr: 0.00001
-  max_epoch: 2 # 45
-  epoch_warmup: 0 # 4
+  max_epoch: 20 # 45
+  epoch_warmup: 1 # 4
